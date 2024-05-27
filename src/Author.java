@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Author {
@@ -71,25 +72,48 @@ public class Author {
         System.out.println("Įveskite autoriaus ID, kurį norite redaguoti:");
         long oldID = sc.nextLong();
         sc.nextLine();
-        for (int i = 0; i < libraryAuthors.size(); i++) {
-            Author author = libraryAuthors.get(i);
-            if (author.getId() == oldID) {
+        for (int i = 0; i < libraryAuthors.size(); i++) { //nuskaito kiekvieną objektą visame array dydyje (size)
+            Author author = libraryAuthors.get(i); //radus reikalingą objektą gauna ID
+            if (author.getId() == oldID) { // jei gautas ID sutampa su ivestu ID, dirba toliau ties tuo objektu
                 System.out.println("Įveskite naują autoriaus vardą:");
-                String newName = sc.nextLine();
+                String newName = sc.nextLine(); //pasiima naują vardą
                 System.out.println("Įveskite naują autoriaus pavardę:");
                 String newSurname = sc.nextLine();
                 System.out.println("Įveskite naują autoriaus ID:");
-                long newID = sc.nextLong();
+                long newID = sc.nextLong(); //pasiima naują ID
                 sc.nextLine();
-                author.setName(newName);
+                author.setName(newName); //įgalina vardą, pavardę
                 author.setSurname(newSurname);
-                if (newID != 0) {
-                    author.setId((int) newID);
-                }
-                System.out.println("Autorius sėkmingai atnaujintas!");
+                System.out.println("Autoriaus duomenys atnaujinti: " + newID + " " + newName + " " + newSurname);
                 return;
+            } else System.out.println("Autorius nerastas.");
+        }
+    }
+
+    public static void removeAuthor(Scanner sc, ArrayList<Author> libraryAuthors) {
+        boolean authorFound = false;
+        while (true) {
+            System.out.println("Įveskite autoriaus ID, kurį norite ištrinti");
+            try {
+                long authorID = sc.nextLong();
+                for (int i = 0; i < libraryAuthors.size(); i++) {
+                    Author author = libraryAuthors.get(i);
+                    if (author.getId() == authorID) {
+                        libraryAuthors.remove(author);
+                        System.out.println("Autorius ištrintas");
+                        authorFound = true;
+                        break;
+                    }
+                }
+                if (!authorFound) {
+                    System.out.println("Autorius pagal tokį ID nerastas");
+                } else {
+                    break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Klaida vedant ID. Įveskite keturis skaitmenis");
+                sc.next();
             }
         }
-        System.out.println("Autorius nerastas.");
     }
 }

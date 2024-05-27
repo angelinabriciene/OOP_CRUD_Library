@@ -4,18 +4,22 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        System.out.println("Sveiki atvykę į rekomendacijų biblioteką. Pasirinkite vieną iš funkcijų:");
+        System.out.println("Sveiki atvykę į rekomendacijų biblioteką. Pasirinkite norimą funkciją:");
         System.out.println("1. Įvesti naują autorių");
         System.out.println("2. Pamatyti visą autorių sąrašą");
         System.out.println("3. Redaguoti pasirinktą autorių");
         System.out.println("4. Ištrinti autorių iš sąrašo");
         System.out.println("5. Išeiti iš programos");
         System.out.println("---------------");
+
         ArrayList<Author> libraryAuthors = new ArrayList<>();
         Author a = new Author();
+
         a.setId(5555);
         a.setName("Petras");
         a.setSurname("Petraitis");
+        libraryAuthors.add(a);
+
         Scanner sc = new Scanner(System.in);
 
         while (true) {
@@ -32,10 +36,10 @@ public class Main {
                     Author.editAuthor(sc, libraryAuthors);
                     break;
                 case 4:
-
-
-
-
+                    Author.removeAuthor(sc, libraryAuthors);
+                    break;
+                case 5:
+                    System.exit(1);
             }
         }
     }
